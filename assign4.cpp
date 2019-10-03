@@ -9,14 +9,23 @@ class Integer {
 private:
 	  int x;
 public:
-	Integer(int t) : x(10) {};
+	Integer(int t) : x(10) { };
 	int fun()const { return x; }
 	void operator ++() {
 		 ++x;
 	}
-	void operator ++(int) {
-		x++;
+	Integer operator ++(int) {
+		Integer temp(0);
+		temp.x = x++;
+		return temp;
 	}
+	const Integer& operator += (const Integer& rhs) {
+		this->x += rhs.x;
+		//this->y += rhs.y;
+		return *this;
+	}
+
+
 };
 ostream& operator <<( std::ostream& cout, const Integer& I)
 {
@@ -26,16 +35,10 @@ ostream& operator <<( std::ostream& cout, const Integer& I)
 }
 
 
-//Integer& operator += (const Integer& rhs) {
-//	rhs + *this;
-//	return *this;
-//
-//
-//}
 
 int main()
 {
-	Integer I(10);
+	Integer I(0);
 	cout << "\nI=" << I.fun();
 
 	cout << I << I;
@@ -43,10 +46,9 @@ int main()
   /*  ++I;
 	++I;
 	++I;*/
-
-	//I + I++;
-
 	cout << "\nI=" << I.fun();
+	I += 10;
+    cout << "\nI=" << I.fun();
 	I++;
 	cout << "\nI=" << I.fun();
 	_getch();
